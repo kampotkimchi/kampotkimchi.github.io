@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kampot Kimchi - The Soul of Kampot, Fermented</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&family=Koulen&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Kampot Terroir -->
+    <!-- Application Structure Plan: The application is designed as a single-page, top-down narrative with a fixed navigation bar for smooth scrolling. The sections are: Hero, Our Story, The Product, Our Ingredients, How to Order, and a Footer. A language switcher has been added. This linear flow is ideal for telling the brand's story and guiding the user directly to the primary call-to-action (ordering), now in two languages. -->
+    <!-- Visualization & Content Choices: Information is presented through themed content blocks with high-quality placeholder imagery. An interactive accordion (HTML/JS) reveals the detailed ingredient list, ensuring legal compliance. The key interaction is a language toggle that switches content between English and Khmer. All text is updated to be more direct and focuses on Black Kampot Pepper. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDF8F2; /* Natural Reed Tan */
+            color: #333333; /* Charcoal Black */
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .font-khmer {
+             font-family: 'Koulen', sans-serif;
+        }
+        .kimchi-red { color: #9E2B25; }
+        .bg-kimchi-red { background-color: #9E2B25; }
+        .border-kimchi-red { border-color: #9E2B25; }
+        .kampot-pepper-black { color: #333333; }
+        .bg-terracotta { background-color: #C18C5D; }
+        .bg-reed-tan { background-color: #FDF8F2; }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #9E2B25;
+            transition: width .3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        /* -- Language Switcher Logic -- */
+        /* By default, the page is English. Hide Khmer text. */
+        body.lang-en .lang-km { display: none; }
+        /* When the body has the .lang-km class, hide English text. */
+        body.lang-km .lang-en { display: none; }
+        /* The default state (without JS) will show both, this ensures a functional base */
+    </style>
+</head>
+<body class="lang-en">
+
+    <header id="header" class="bg-reed-tan/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-bold font-display kimchi-red flex items-center">
+                Kampot Kimchi <span class="text-3xl ml-2 kampot-pepper-black">🌶️</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#story" class="text-gray-700 hover:kimchi-red font-semibold nav-link"><span class="lang-en">Our Story</span><span class="lang-km font-khmer">เรื่องราวរបស់យើង</span></a>
+                <a href="#product" class="text-gray-700 hover:kimchi-red font-semibold nav-link"><span class="lang-en">The Product</span><span class="lang-km font-khmer">ផលិតផល</span></a>
+                <a href="#ingredients" class="text-gray-700 hover:kimchi-red font-semibold nav-link"><span class="lang-en">Ingredients</span><span class="lang-km font-khmer">គ្រឿងផ្សំ</span></a>
+                <a href="#order" class="bg-kimchi-red text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors"><span class="lang-en">Order Now</span><span class="lang-km font-khmer">បញ្ជាទិញឥឡូវនេះ</span></a>
+                 <button id="lang-switcher" class="border border-gray-400 px-3 py-1 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors">
+                    <span class="lang-en">ខ្មែរ</span>
+                    <span class="lang-km">English</span>
+                </button>
+            </nav>
+            <div class="md:hidden flex items-center gap-4">
+                <a href="#order" class="bg-kimchi-red text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors text-sm"><span class="lang-en">Order</span><span class="lang-km font-khmer">បញ្ជាទិញ</span></a>
+                 <button id="lang-switcher-mobile" class="border border-gray-400 px-3 py-1 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors">
+                    <span class="lang-en">ខ្មែរ</span>
+                    <span class="lang-km">EN</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/C18C5D/FDF8F2?text=Artisanal+Kampot+Kimchi');">
+            <div class="text-center bg-black/30 backdrop-blur-sm p-8 md:p-16 rounded-lg">
+                <h1 class="text-5xl md:text-7xl font-bold text-white font-display">
+                    <span class="lang-en">Taste Kampot in Every Bite.</span>
+                    <span class="lang-km font-khmer">រសជាតិកំពតក្នុងមួយម៉ាត់។</span>
+                </h1>
+                <p class="text-white text-lg md:text-xl mt-4 max-w-2xl mx-auto">
+                    <span class="lang-en">A special mix of Korean kimchi and fresh Cambodian ingredients.</span>
+                    <span class="lang-km font-khmer">ការผสมពិសេសនៃគីមឈីកូរ៉េ និងគ្រឿងផ្សំស្រស់ៗរបស់ខ្មែរ។</span>
+                </p>
+                <a href="#order" class="mt-8 inline-block bg-kimchi-red text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition-transform hover:scale-105">
+                    <span class="lang-en">Order Your Jar Today</span>
+                    <span class="lang-km font-khmer">បញ្ជាទិញពាងរបស់អ្នកថ្ងៃនេះ</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="story" class="py-20 md:py-32 fade-in-section">
+            <div class="container mx-auto px-6 text-center max-w-4xl">
+                 <h2 class="text-4xl md:text-5xl font-bold kimchi-red font-display">
+                    <span class="lang-en">A New Taste from Kampot</span>
+                    <span class="lang-km font-khmer">រសជាតិថ្មីពីកំពត</span>
+                </h2>
+                <p class="mt-6 text-lg text-gray-700 leading-relaxed">
+                    <span class="lang-en">We love Korean kimchi and we love Cambodian food. So, we mixed them! We use the famous Black Kampot Pepper to give our kimchi a special taste you can only find here. It's a new food that shares the story of Kampot in every jar.</span>
+                    <span class="lang-km font-khmer">យើងស្រឡាញ់គីមឈីកូរ៉េ ហើយយើងក៏ស្រឡាញ់ម្ហូបខ្មែរដែរ។ ដូច្នេះ យើងបានលាយបញ្ចូលគ្នា! យើងប្រើម្រេចខ្មៅកំពតដ៏ល្បីល្បាញដើម្បីផ្តល់ឱ្យគីមឈីរបស់យើងនូវរសជាតិពិសេសដែលអ្នកអាចរកបានតែនៅទីនេះប៉ុណ្ណោះ។ វាជាអាហារថ្មីមួយដែលចែករំលែករឿងរ៉ាវនៃខេត្តកំពតในគ្រប់ពាង។</span>
+                </p>
+            </div>
+        </section>
+
+        <section id="product" class="py-20 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-4xl md:text-5xl font-bold kimchi-red font-display">
+                        <span class="lang-en">Our Signature Kimchi</span>
+                        <span class="lang-km font-khmer">គីមឈីពិសេសរបស់យើង</span>
+                    </h2>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                    <div class="md:w-1/2">
+                        <img src="https://placehold.co/600x600/9E2B25/FFFFFF?text=Kampot+Kimchi+Black" alt="Jar of Kampot Kimchi" class="rounded-xl shadow-2xl mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x600/cccccc/333333?text=Image+Not+Found';">
+                    </div>
+                    <div class="md:w-1/2 text-left">
+                        <h3 class="text-3xl font-bold text-gray-800 font-display">
+                            <span class="lang-en">Bold, Spicy, Unforgettable.</span>
+                            <span class="lang-km font-khmer">រសជាតិដិត ហឹរ និងមិនអាចបំភ្លេចបាន</span>
+                        </h3>
+                        <p class="mt-4 text-gray-700 leading-relaxed">
+                            <span class="lang-en">Our signature kimchi is crafted with authentic PGI Black Kampot Pepper. Each bite delivers a robust, peppery heat with deep, woody notes, balanced by the natural crispness of locally grown cabbage and the clean mineral tang of artisanal Kampot Sea Salt. This is more than a condiment; it's a taste of Cambodia's power, bottled with passion.</span>
+                            <span class="lang-km font-khmer">គីមឈីពិសេសរបស់យើងត្រូវបានផលិតឡើងដោយម្រេចខ្មៅកំពត (PGI) ពិតប្រាកដ។ រាល់คำกัดផ្តល់នូវความร้อนพริกไทยที่เข้มข้นพร้อมกลิ่นឈើลึก สมดุลด้วยความกรอบตามธรรมชาติของស្ពៃបូកគោที่ปลูกในท้องถิ่นและความเค็มแร่ธาตุที่สะอาดของអំបិលសមុទ្រកំពត។ នេះមិនមែនគ្រាន់តែជាเครื่องปรุงទេ វាគឺជារសជាតិនៃพลังរបស់កម្ពុជា ដែលบรรจุขวดด้วยความรัก។</span>
+                        </p>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <span class="bg-gray-800/20 text-gray-800 font-semibold px-3 py-1 rounded-full text-sm"><span class="lang-en">Bold</span><span class="lang-km font-khmer">ដិត</span></span>
+                            <span class="bg-gray-800/20 text-gray-800 font-semibold px-3 py-1 rounded-full text-sm"><span class="lang-en">Spicy</span><span class="lang-km font-khmer">ហឹរ</span></span>
+                            <span class="bg-gray-800/20 text-gray-800 font-semibold px-3 py-1 rounded-full text-sm"><span class="lang-en">Earthy</span><span class="lang-km font-khmer">ក្លិនដី</span></span>
+                            <span class="bg-gray-800/20 text-gray-800 font-semibold px-3 py-1 rounded-full text-sm"><span class="lang-en">Robust</span><span class="lang-km font-khmer">ខ្លាំង</span></span>
+                        </div>
+
+                        <div id="ingredients-accordion" class="mt-8 border-t border-gray-200 pt-6">
+                            <button id="accordion-button" class="w-full flex justify-between items-center text-left font-semibold text-lg text-gray-800">
+                                <span><span class="lang-en">Full Ingredients & Legal Information</span><span class="lang-km font-khmer">គ្រឿងផ្សំពេញលេញ និងព័ត៌មានផ្នែកច្បាប់</span></span>
+                                <span id="accordion-icon" class="transform transition-transform">▼</span>
+                            </button>
+                            <div id="accordion-content" class="overflow-hidden max-h-0 transition-all duration-500">
+                                <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                                    <p class="font-semibold"><span class="lang-en">Ingredients:</span><span class="lang-km font-khmer">គ្រឿងផ្សំ៖</span></p>
+                                    <p class="text-gray-600">Napa Cabbage, Water, PGI Black Kampot Pepper, Kampot Sea Salt, Carrots, Daikon Radish, Garlic, Ginger, Palm Sugar, Rice Flour.</p>
+                                    <p class="font-semibold mt-4">គ្រឿងផ្សំ៖</p>
+                                    <p class="text-gray-600 font-khmer">ស្ពៃបូកគោ, ទឹក, ម្រេចខ្មៅកំពត (PGI), អំបិលសមុទ្រកំពត, ការ៉ុត, ឆៃថាវ, ខ្ទឹមស, ខ្ញី, ស្ករត្នោត, ម្សៅអង្ករ។</p>
+                                    <p class="font-semibold mt-4"><span class="lang-en">Storage Instructions:</span><span class="lang-km font-khmer">សេចក្តីណែនាំអំពីការផ្ទុក៖</span></p>
+                                    <p class="text-gray-600"><span class="lang-en">Keep Refrigerated. Made in Cambodia.</span><span class="lang-km font-khmer">រក្សាទុកក្នុងទូទឹកកក។ ផលិតនៅប្រទេសកម្ពុជា។</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="ingredients" class="py-20 md:py-32 fade-in-section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold kimchi-red font-display">
+                        <span class="lang-en">The Heart of Our Flavor</span>
+                        <span class="lang-km font-khmer">បេះដូងនៃរសជាតិរបស់យើង</span>
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+                    <div class="flex flex-col items-center">
+                        <img src="https://placehold.co/400x400/333333/FFFFFF?text=PGI+Black+Kampot+Pepper" alt="Black Kampot Pepper" class="w-48 h-48 object-cover rounded-full shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/333333?text=Image+Not+Found';">
+                        <h3 class="text-2xl font-bold mt-6 font-display"><span class="lang-en">PGI Black Kampot Pepper</span><span class="lang-km font-khmer">ម្រេចខ្មៅកំពត PGI</span></h3>
+                        <p class="mt-2 text-gray-600"><span class="lang-en">The king of peppers, offering intense, musky aromas and a strong, spicy heat.</span><span class="lang-km font-khmer">ស្តេចម្រេច ដែលផ្តល់ក្លិនក្រអូបខ្លាំង និងรสเผ็ดร้อน។</span></p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <img src="https://placehold.co/400x400/A8DADC/333333?text=Kampot+Sea+Salt" alt="Kampot sea salt" class="w-48 h-48 object-cover rounded-full shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/333333?text=Image+Not+Found';">
+                        <h3 class="text-2xl font-bold mt-6 font-display"><span class="lang-en">Artisanal Kampot Sea Salt</span><span class="lang-km font-khmer">អំបិលសមុទ្រកំពត</span></h3>
+                        <p class="mt-2 text-gray-600"><span class="lang-en">Hand-harvested and rich in natural minerals, it enhances flavor and honors local tradition.</span><span class="lang-km font-khmer">ប្រមូលផលដោយដៃ និងសម្បូរទៅด้วยแร่ธาตุธรรมชาติ វាជួយเพิ่มรสជាតិ និងគោរពប្រពៃណីท้องถิ่น។</span></p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <img src="https://placehold.co/400x400/E9C46A/333333?text=Local+Palm+Sugar" alt="Palm sugar" class="w-48 h-48 object-cover rounded-full shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/333333?text=Image+Not+Found';">
+                        <h3 class="text-2xl font-bold mt-6 font-display"><span class="lang-en">Local Palm Sugar</span><span class="lang-km font-khmer">ស្ករត្នោត</span></h3>
+                        <p class="mt-2 text-gray-600"><span class="lang-en">An iconic Cambodian product providing a subtle, caramel-like sweetness to balance the heat.</span><span class="lang-km font-khmer">ផលិតផលខ្មែรแท้ ដែលផ្តល់ความหวานคล้ายคาราเมลเพื่อปรับสมดุลความเผ็ด។</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="order" class="py-20 md:py-32 bg-white fade-in-section">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold kimchi-red font-display">
+                    <span class="lang-en">How to Order</span>
+                    <span class="lang-km font-khmer">របៀបបញ្ជាទិញ</span>
+                </h2>
+                <p class="mt-6 text-lg text-gray-700 max-w-2xl mx-auto">
+                    <span class="lang-en">Ordering is simple. Scan the QR code to message us on Telegram, or contact us directly using the numbers below.</span>
+                    <span class="lang-km font-khmer">ការបញ្ជាទិញគឺងាយស្រួល។ ស្កេន QR code ដើម្បីផ្ញើសារមកយើងខ្ញុំតាម Telegram ឬទាក់ទងមកយើងខ្ញុំโดยตรงតាមเบอร์ខាងក្រោម។</span>
+                </p>
+                
+                <div class="mt-12 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
+                    <div class="text-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://t.me/kusto201" alt="QR Code to order on Telegram" class="rounded-lg shadow-lg mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/256x256/cccccc/333333?text=QR+Code';">
+                        <p class="mt-4 font-semibold text-lg"><span class="lang-en">Scan for Telegram</span><span class="lang-km font-khmer">ស្កេនសម្រាប់ Telegram</span></p>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <p class="text-lg text-gray-600"><span class="lang-en">Or contact us directly:</span><span class="lang-km font-khmer">ឬទាក់ទងមកយើងខ្ញុំដោយตรง៖</span></p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-2">
+                            <span class="block"><span class="lang-en">Local:</span><span class="lang-km font-khmer">ក្នុងស្រុក៖</span> <span class="kimchi-red">096 548 4585</span></span>
+                            <span class="block mt-2"><span class="lang-en">International:</span><span class="lang-km font-khmer">អន្តរជាតិ៖</span> <span class="kimchi-red">+855 96 548 4585</span></span>
+                        </h3>
+                        <p class="mt-4 text-sm text-gray-500"><span class="lang-en">We deliver in Kampot and ship to other provinces.</span><span class="lang-km font-khmer">យើងដឹកជញ្ជូននៅកំពត និងส่งទៅจังหวัดផ្សេងៗ។</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-terracotta text-white">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="font-bold font-display text-xl">Kampot Kimchi</p>
+            <p class="mt-2 text-sm"><span class="lang-en">Kampot, Cambodia</span><span class="lang-km font-khmer">កំពត, កម្ពុជា</span></p>
+            <p class="mt-4 text-xs opacity-70">&copy; 2025 Kampot Kimchi. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Language Switcher ---
+            // Select both desktop and mobile switcher buttons
+            const switcherButtons = [document.getElementById('lang-switcher'), document.getElementById('lang-switcher-mobile')];
+            const body = document.body;
+
+            // Function to set the language class on the body
+            const setLanguage = (lang) => {
+                if (lang === 'km') {
+                    body.classList.remove('lang-en');
+                    body.classList.add('lang-km');
+                } else {
+                    body.classList.remove('lang-km');
+                    body.classList.add('lang-en');
+                }
+            };
+
+            // Add a click event listener to both buttons
+            switcherButtons.forEach(button => {
+                if(button) { // Check if the button exists before adding listener
+                    button.addEventListener('click', () => {
+                        // Check the current language and toggle to the other one
+                        const currentLang = body.classList.contains('lang-km') ? 'km' : 'en';
+                        const newLang = currentLang === 'en' ? 'km' : 'en';
+                        setLanguage(newLang);
+                    });
+                }
+            });
+
+
+            // --- Fade In Sections on Scroll ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    // If the section is in the viewport, add the 'is-visible' class
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the section is visible
+            });
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // --- Ingredients Accordion ---
+            const accordionButton = document.getElementById('accordion-button');
+            const accordionContent = document.getElementById('accordion-content');
+            const accordionIcon = document.getElementById('accordion-icon');
+
+            if(accordionButton) {
+                accordionButton.addEventListener('click', () => {
+                    // Check if the accordion is open or closed
+                    if (accordionContent.style.maxHeight) {
+                        // If it's open, close it and rotate the icon back
+                        accordionContent.style.maxHeight = null;
+                        accordionIcon.style.transform = 'rotate(0deg)';
+                    } else {
+                        // If it's closed, open it to its full scroll height and rotate icon
+                        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                        accordionIcon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            }
+            
+            // --- Smooth Scrolling for Nav Links ---
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let hash = this.getAttribute('href');
+                    let target = document.querySelector(hash);
+                    if(target) {
+                        // Scroll smoothly to the target section
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>
